@@ -71,6 +71,41 @@ app.get('/me', (req, res) => {
     }
 });
 
+
+app.post('/decode', (req , res) => {
+
+    const token = req.body.token ;
+
+    if(!token) {
+
+        res.json({
+            message:"Token is required !" 
+        });
+
+    }
+
+    const decoded = jwt.decode(token) ;
+
+    if(decoded) {
+        res.send({
+           decoded: decoded ,
+           message:"Token is decoded (but not verified)"
+        })
+    }
+    else {
+        res.status(403).send({
+            message:"Can't decoded"
+        })
+    }
+
+
+
+
+
+} )
+
+
+
 app.listen(port,()=> {
     console.log("server is running on port " + port ) ;
 })
